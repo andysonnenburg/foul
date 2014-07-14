@@ -1,7 +1,9 @@
 #ifndef FOUL_OBJ_H
 #define FOUL_OBJ_H
 
+#include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 typedef struct foul_obj foul_obj_t;
 typedef struct foul_obj_vtable foul_obj_vtable_t;
@@ -31,16 +33,20 @@ inline void foul_obj_init(foul_obj_t *obj, foul_obj_vtable_t const *vtable) {
 
 #define foul_obj(obj) &(obj)->super
 
+inline bool foul_is_marked(foul_obj_t const* obj) {
+	return ((uintptr_t) obj->vtable) & 1;
+}
+
 inline size_t foul_size(foul_obj_t const *obj) {
-	return obj->vtable->size(obj);
+	return ((foul_obj_vtable_t *) (((uintptr_t) obj->vtable) & ~1))->size(obj);
 }
 
 inline foul_obj_t **foul_begin(foul_obj_t *obj) {
-	return obj->vtable->begin(obj);
+	return ((foul_obj_vtable_t *) (((uintptr_t) obj->vtable) & ~1))->begin(obj);
 }
 
 inline foul_obj_t **foul_end(foul_obj_t *obj) {
-	return obj->vtable->end(obj);
+	return ((foul_obj_vtable_t *) (((uintptr_t) obj->vtable) & ~1))->end(obj);
 }
 
 #endif

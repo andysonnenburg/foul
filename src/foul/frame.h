@@ -15,9 +15,9 @@ struct foul_frame {
 
 inline void foul_frame_init(foul_frame_t *frame, foul_frame_t *parent) {
 	frame->parent = parent;
-	frame->param_begin = 0;
+	frame->param_begin = NULL;
 	frame->param_size = 0;
-	frame->local_begin = 0;
+	frame->local_begin = NULL;
 	frame->local_size = 0;
 }
 

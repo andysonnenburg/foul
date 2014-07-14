@@ -6,17 +6,15 @@
 void to_zero(foul_frame_t *head, foul_int_obj_t *x, foul_func1_obj_t *cont) {
 	foul_frame_t tail;
 	foul_int_obj_t y;
-	printf("head: %p\n", &head);
-	printf("x: %p\n", &x);
-	printf("cont: %p\n", &cont);
 	foul_frame_init(&tail, head);
 	foul_frame_push_param(&tail, &head, sizeof(head));
 	foul_frame_push_param(&tail, &x, sizeof(x));
 	foul_frame_push_param(&tail, &cont, sizeof(cont));
-	printf("param_begin: %p\n", tail.param_begin);
 	foul_int_obj_init(&y);
 	foul_frame_push_local(&tail, &y, foul_size(foul_obj(&y)));
+	puts("mark x");
 	foul_mark(foul_obj(x));
+	puts("mark cont");
 	foul_mark(foul_obj(cont));
 	if (foul_int(x) <= 1) {
 		foul_call1(&tail, cont, foul_obj(x));
