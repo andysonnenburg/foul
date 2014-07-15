@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void set_marked(foul_obj_t *obj) {
+static void set_marked(foul_obj_t *obj) {
 	obj->vtable = (foul_obj_vtable_t *) (((uintptr_t) obj->vtable) | 1);
 }
 
