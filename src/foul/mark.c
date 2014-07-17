@@ -10,7 +10,7 @@ static void set_marked(foul_obj_t *obj) {
 void foul_mark(foul_obj_t *obj) {
 	for (foul_obj_t *parent = NULL;;) {
 		set_marked(obj);
-		foul_obj_t **i = foul_begin(obj) + obj->offset;
+		foul_obj_iterator_t i = foul_begin(obj) + obj->offset;
 		if (i != foul_end(obj)) {
 			foul_obj_t *tmp = *i;
 			if (!foul_is_marked(tmp)) {

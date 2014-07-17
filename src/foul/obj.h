@@ -16,9 +16,10 @@ struct foul_obj {
 	};
 };
 
+typedef foul_obj_t **foul_obj_iterator_t;
 typedef size_t (*foul_obj_size_t)(foul_obj_t const *);
-typedef foul_obj_t **(*foul_obj_begin_t)(foul_obj_t *);
-typedef foul_obj_t **(*foul_obj_end_t)(foul_obj_t *);
+typedef foul_obj_iterator_t (*foul_obj_begin_t)(foul_obj_t *);
+typedef foul_obj_iterator_t (*foul_obj_end_t)(foul_obj_t *);
 
 struct foul_obj_vtable {
 	foul_obj_size_t const size;
@@ -41,11 +42,11 @@ inline size_t foul_size(foul_obj_t const *obj) {
 	return ((foul_obj_vtable_t *) (((uintptr_t) obj->vtable) & ~1))->size(obj);
 }
 
-inline foul_obj_t **foul_begin(foul_obj_t *obj) {
+inline foul_obj_iterator_t foul_begin(foul_obj_t *obj) {
 	return ((foul_obj_vtable_t *) (((uintptr_t) obj->vtable) & ~1))->begin(obj);
 }
 
-inline foul_obj_t **foul_end(foul_obj_t *obj) {
+inline foul_obj_iterator_t foul_end(foul_obj_t *obj) {
 	return ((foul_obj_vtable_t *) (((uintptr_t) obj->vtable) & ~1))->end(obj);
 }
 

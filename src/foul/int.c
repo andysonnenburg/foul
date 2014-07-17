@@ -8,11 +8,11 @@ static size_t foul_int_obj_size(foul_obj_t const *obj) {
 	return sizeof(*((foul_int_obj_t*) obj));
 }
 
-static foul_obj_t **foul_int_obj_begin(foul_obj_t *obj) {
+static foul_obj_iterator_t foul_int_obj_begin(foul_obj_t *obj) {
 	return NULL;
 }
 
-static foul_obj_t **foul_int_obj_end(foul_obj_t *obj) {
+static foul_obj_iterator_t foul_int_obj_end(foul_obj_t *obj) {
 	return NULL;
 }
 
