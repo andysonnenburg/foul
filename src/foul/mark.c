@@ -3,11 +3,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
-static void set_marked(foul_obj_t *obj) {
+static inline void set_marked(foul_obj_t *obj) {
 	obj->vtable = (foul_obj_vtable_t *) (((uintptr_t) obj->vtable) | 1);
 }
 
-void foul_mark(foul_obj_t *obj) {
+size_t foul_mark(foul_obj_t *obj, size_t offset) {
 	for (foul_obj_t *parent = NULL;;) {
 		set_marked(obj);
 		foul_obj_iterator_t i = foul_begin(obj) + obj->offset;
@@ -21,14 +21,17 @@ void foul_mark(foul_obj_t *obj) {
 				++obj->offset;
 			}
 		} else {
+			obj->offset = offset;
+			offset += foul_size(obj);
 			if (!parent) {
-				break;
+				return offset;
 			}
 			foul_obj_t *tmp = parent;
 			i = foul_begin(tmp) + tmp->offset;
 			parent = *i;
 			*i = obj;
 			obj = tmp;
+			++obj->offset;
 		}
 	}
 }

@@ -6,8 +6,10 @@
 void to_zero(foul_env_t *env, foul_int_obj_t *x, foul_func1_obj_t *cont) {
 	foul_int_obj_t y;
 	foul_int_obj_init(&y);
-	foul_mark(foul_obj(x));
-	foul_mark(foul_obj(cont));
+	size_t size = foul_mark(foul_obj(x), 0);
+	printf("%u\n", size);
+	size = foul_mark(foul_obj(cont), size);
+	printf("%u\n", size);
 	if (foul_int(x) <= 1) {
 		foul_call1(env, cont, foul_obj(x));
 	} else {

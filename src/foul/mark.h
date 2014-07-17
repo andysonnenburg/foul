@@ -3,6 +3,8 @@
 
 #include "obj.h"
 
-void foul_mark(foul_obj_t *);
+#include <stddef.h>
+
+size_t foul_mark(foul_obj_t *, size_t);
 
 #endif
