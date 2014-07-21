@@ -10,10 +10,7 @@ typedef struct foul_obj_vtable foul_obj_vtable_t;
 
 struct foul_obj {
 	foul_obj_vtable_t const *vtable;
-	union {
-		size_t offset;
-		foul_obj_t *forward;
-	};
+	size_t offset;
 };
 
 typedef foul_obj_t **foul_obj_iterator_t;
@@ -36,6 +33,14 @@ inline void foul_obj_init(foul_obj_t *obj, foul_obj_vtable_t const *vtable) {
 
 inline bool foul_is_marked(foul_obj_t const* obj) {
 	return ((uintptr_t) obj->vtable) & 1;
+}
+
+inline void foul_set_marked(foul_obj_t *obj) {
+	obj->vtable = (foul_obj_vtable_t *) (((uintptr_t) obj->vtable) | 1);
+}
+
+inline void foul_set_unmarked(foul_obj_t *obj) {
+	obj->vtable = (foul_obj_vtable_t *) (((uintptr_t) obj->vtable) & ~1);
 }
 
 inline size_t foul_size(foul_obj_t const *obj) {

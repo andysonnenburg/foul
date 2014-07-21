@@ -1,5 +1,7 @@
 #include "func.h"
 
+extern inline void foul_env_init(foul_env_t *);
+extern inline void foul_env_free(foul_env_t *);
 extern inline void foul_func0_obj_init(foul_func0_obj_t *, foul_func0_t *, foul_func_env_t *);
 extern inline void foul_call0(foul_env_t *, foul_func0_obj_t *);
 

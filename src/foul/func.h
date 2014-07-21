@@ -4,14 +4,29 @@
 #include "obj.h"
 
 #include <setjmp.h>
+#include <stddef.h>
+#include <stdlib.h>
 
 typedef struct foul_func0_obj foul_func0_obj_t;
 typedef struct foul_func1_obj foul_func1_obj_t;
 
 typedef struct foul_env {
 	jmp_buf buf;
+	char *stack_begin;
+	char *heap_begin;
+	char *heap_end;
 	foul_func0_obj_t *func;
 } foul_env_t;
+
+inline void foul_env_init(foul_env_t *env) {
+	env->stack_begin = (char *) env;
+	env->heap_begin = NULL;
+	env->heap_end = NULL;
+}
+
+inline void foul_env_free(foul_env_t *env) {
+	free(env->heap_begin);
+}
 
 typedef foul_obj_t foul_func_env_t;
 

@@ -1,6 +1,6 @@
 #ifndef FOUL_COMPACT_H
 #define FOUL_COMPACT_H
 
-void foul_compact(foul_obj_t *, void *);
+char *foul_compact(char *, char *);
 
 #endif
